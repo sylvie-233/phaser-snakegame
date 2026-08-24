@@ -1,7 +1,7 @@
 import * as Phaser from 'phaser'
 import { GAME_WIDTH } from '../layout'
 import { drawGridBackground } from './drawGrid'
-import { createButton } from '../ui/createButton'
+import { createButton, createLabel, uiColors } from '@snake/ui'
 
 interface GameOverData {
   score: number
@@ -49,37 +49,24 @@ export class GameOverScene extends Phaser.Scene {
 
     // 标题
     const title = this.won ? '你赢了!' : '游戏结束'
-    const titleColor = this.won ? '#fbbf24' : '#f87171'
-    this.add
-      .text(GAME_WIDTH / 2, 160, title, {
-        fontFamily: 'system-ui, "Microsoft YaHei", sans-serif',
-        fontSize: '52px',
-        fontStyle: 'bold',
-        color: titleColor,
-      })
-      .setOrigin(0.5)
+    const titleColor = this.won ? uiColors.accent : '#f87171'
+    createLabel(this, GAME_WIDTH / 2, 160, title, { variant: 'title', color: titleColor })
 
     // 得分
-    this.add
-      .text(GAME_WIDTH / 2, 300, `得分: ${this.score}`, {
-        fontFamily: 'system-ui, "Microsoft YaHei", sans-serif',
-        fontSize: '34px',
-        color: '#f8fafc',
-      })
-      .setOrigin(0.5)
+    createLabel(this, GAME_WIDTH / 2, 300, `得分: ${this.score}`, {
+      fontSize: '34px',
+      color: uiColors.textPrimary,
+    })
 
     // 最佳得分 / 新纪录(localStorage 持久化)
     const prevBest = readBestScore()
     const best = Math.max(prevBest, this.score)
     saveBestScore(best)
     const isRecord = this.score > prevBest && this.score > 0
-    this.add
-      .text(GAME_WIDTH / 2, 365, isRecord ? '新纪录!' : `最佳: ${best}`, {
-        fontFamily: 'system-ui, "Microsoft YaHei", sans-serif',
-        fontSize: '22px',
-        color: isRecord ? '#fbbf24' : '#94a3b8',
-      })
-      .setOrigin(0.5)
+    createLabel(this, GAME_WIDTH / 2, 365, isRecord ? '新纪录!' : `最佳: ${best}`, {
+      fontSize: '22px',
+      color: isRecord ? uiColors.accent : uiColors.textMuted,
+    })
 
     // 重新开始 / 返回主页 按钮
     createButton(this, GAME_WIDTH / 2 - 135, 500, {
@@ -88,9 +75,7 @@ export class GameOverScene extends Phaser.Scene {
     })
     createButton(this, GAME_WIDTH / 2 + 135, 500, {
       text: '返回主页',
-      backgroundColor: 0x334155,
-      hoverColor: 0x475569,
-      textColor: '#f1f5f9',
+      variant: 'secondary',
       onClick: () => this.backToStart(),
     })
   }

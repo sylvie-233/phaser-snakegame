@@ -1,0 +1,4 @@
+{
+  "extends": "@snake/tsconfig/browser.json",
+  "include": ["src"]
+}

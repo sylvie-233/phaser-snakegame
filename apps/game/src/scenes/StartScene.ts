@@ -1,7 +1,7 @@
 import * as Phaser from 'phaser'
-import { GAME_HEIGHT, GAME_WIDTH } from '../layout'
+import { GAME_WIDTH } from '../layout'
 import { drawGridBackground } from './drawGrid'
-import { createButton } from '../ui/createButton'
+import { createButton, createLabel, openModal, type ModalHandle } from '@snake/ui'
 
 const BG_COLOR = 0x0f172a
 const SNAKE_HEAD_COLOR = 0x4ade80
@@ -14,7 +14,7 @@ const CONTROL_ROWS = [
 
 export class StartScene extends Phaser.Scene {
   private started = false
-  private controlsObjects: Phaser.GameObjects.GameObject[] = []
+  private modal: ModalHandle | null = null
 
   constructor() {
     super('StartScene')
@@ -30,22 +30,8 @@ export class StartScene extends Phaser.Scene {
     drawGridBackground(this)
 
     // 标题
-    this.add
-      .text(GAME_WIDTH / 2, 150, '贪吃蛇', {
-        fontFamily: 'system-ui, "Microsoft YaHei", sans-serif',
-        fontSize: '56px',
-        fontStyle: 'bold',
-        color: '#f8fafc',
-      })
-      .setOrigin(0.5)
-
-    this.add
-      .text(GAME_WIDTH / 2, 208, 'Phaser 4 · TypeScript', {
-        fontFamily: 'system-ui, "Microsoft YaHei", sans-serif',
-        fontSize: '16px',
-        color: '#64748b',
-      })
-      .setOrigin(0.5)
+    createLabel(this, GAME_WIDTH / 2, 150, '贪吃蛇', { variant: 'heading' })
+    createLabel(this, GAME_WIDTH / 2, 208, 'Phaser 4 · TypeScript', { variant: 'muted' })
 
     this.drawDecorativeSnake()
 
@@ -55,96 +41,44 @@ export class StartScene extends Phaser.Scene {
       onClick: () => this.startGame(),
     })
 
-    // 按键说明按钮:弹出操作说明面板
+    // 按键说明按钮:弹出操作说明弹窗
     createButton(this, GAME_WIDTH / 2, 572, {
       text: '按键说明',
-      width: 200,
-      height: 48,
-      fontSize: '18px',
-      backgroundColor: 0x334155,
-      hoverColor: 0x475569,
-      textColor: '#f1f5f9',
+      variant: 'secondary',
+      size: 'sm',
       onClick: () => this.showControls(),
     })
   }
 
   private startGame(): void {
-    if (this.started || this.controlsObjects.length > 0) {
+    if (this.started || this.modal) {
       return
     }
     this.started = true
     this.scene.start('GameScene')
   }
 
-  /** 弹出按键操作说明面板(点击遮罩或「关闭」按钮关闭)。 */
+  /** 弹出按键操作说明弹窗(点遮罩或「关闭」按钮关闭)。 */
   private showControls(): void {
-    if (this.controlsObjects.length > 0) {
+    if (this.modal) {
       return
     }
-
-    const overlay = this.add
-      .rectangle(GAME_WIDTH / 2, GAME_HEIGHT / 2, GAME_WIDTH, GAME_HEIGHT, 0x000000, 0.65)
-      .setInteractive({ useHandCursor: true })
-    overlay.on('pointerdown', () => this.hideControls())
-
-    const panel = this.add.graphics()
-    panel.fillStyle(0x1e293b, 1)
-    panel.fillRoundedRect(70, 180, 460, 300, 16)
-    panel.lineStyle(2, 0x475569, 1)
-    panel.strokeRoundedRect(70, 180, 460, 300, 16)
-
-    const title = this.add
-      .text(GAME_WIDTH / 2, 235, '按键操作说明', {
-        fontFamily: 'system-ui, "Microsoft YaHei", sans-serif',
-        fontSize: '26px',
-        fontStyle: 'bold',
-        color: '#f8fafc',
-      })
-      .setOrigin(0.5)
-
-    const rows: Phaser.GameObjects.Text[] = []
-    CONTROL_ROWS.forEach((row, i) => {
-      const y = 315 + i * 60
-      rows.push(
-        this.add
-          .text(240, y, row.key, {
-            fontFamily: 'system-ui, "Microsoft YaHei", sans-serif',
-            fontSize: '20px',
-            fontStyle: 'bold',
-            color: '#4ade80',
-          })
-          .setOrigin(1, 0.5),
-      )
-      rows.push(
-        this.add
-          .text(300, y, row.desc, {
-            fontFamily: 'system-ui, "Microsoft YaHei", sans-serif',
-            fontSize: '18px',
-            color: '#cbd5e1',
-          })
-          .setOrigin(0, 0.5),
-      )
+    this.modal = openModal(this, {
+      title: '按键操作说明',
+      height: 300,
+      // 背景是深色 + 浅网格,遮罩调淡让网格透出来
+      overlayAlpha: 0.35,
+      content: (panel) => {
+        CONTROL_ROWS.forEach((row, i) => {
+          const y = -45 + i * 60
+          panel.add(createLabel(this, -90, y, row.key, { variant: 'body', color: '#4ade80' }))
+          panel.add(createLabel(this, 40, y, row.desc, { variant: 'body' }))
+        })
+      },
+      onClose: () => {
+        this.modal = null
+      },
     })
-
-    const closeBtn = createButton(this, GAME_WIDTH / 2, 435, {
-      text: '关闭',
-      width: 160,
-      height: 48,
-      fontSize: '18px',
-      backgroundColor: 0x334155,
-      hoverColor: 0x475569,
-      textColor: '#f1f5f9',
-      onClick: () => this.hideControls(),
-    })
-
-    this.controlsObjects.push(overlay, panel, title, closeBtn, ...rows)
-  }
-
-  private hideControls(): void {
-    for (const obj of this.controlsObjects) {
-      obj.destroy()
-    }
-    this.controlsObjects = []
   }
 
   /** 绘制一条装饰性的 S 形蛇,与游戏内蛇的视觉语言一致。 */

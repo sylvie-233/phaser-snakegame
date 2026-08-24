@@ -11,6 +11,6 @@ export default defineConfig({
   },
   optimizeDeps: {
     // 工作区内的 TS 源码包按源码处理,不参与依赖预构建
-    exclude: ['@snake/core'],
+    exclude: ['@snake/core', '@snake/ui'],
   },
 })
