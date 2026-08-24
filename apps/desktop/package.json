@@ -32,6 +32,7 @@
       }
     ],
     "win": {
+      "icon": "assets/snakegame.png",
       "target": [
         {
           "target": "nsis",
