@@ -1,0 +1,49 @@
+{
+  "name": "@snake/desktop",
+  "version": "0.1.0",
+  "private": true,
+  "description": "贪吃蛇 Electron 桌面壳(Windows)",
+  "type": "commonjs",
+  "main": "dist/main.js",
+  "scripts": {
+    "build": "node -e \"require('node:fs').rmSync('dist',{recursive:true,force:true})\" && esbuild src/main.ts src/preload.ts --bundle --platform=node --format=cjs --target=node22 --external:electron --outdir=dist",
+    "dev": "electron .",
+    "package": "pnpm build && electron-builder --win",
+    "package:dir": "pnpm build && electron-builder --win --dir",
+    "typecheck": "tsc --noEmit"
+  },
+  "build": {
+    "appId": "com.snake.game",
+    "productName": "SnakeGame",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist/**",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "../game/dist",
+        "to": "game"
+      }
+    ],
+    "win": {
+      "target": [
+        { "target": "nsis", "arch": ["x64"] },
+        { "target": "portable", "arch": ["x64"] }
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    }
+  },
+  "devDependencies": {
+    "@types/node": "^24.13.3",
+    "electron": "^43.4.1",
+    "electron-builder": "^26.15.3",
+    "esbuild": "^0.25.12",
+    "typescript": "^5.9.3"
+  }
+}
