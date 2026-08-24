@@ -3,14 +3,17 @@
   "version": "0.1.0",
   "private": true,
   "description": "贪吃蛇 Electron 桌面壳(Windows)",
-  "type": "commonjs",
+  "type": "module",
   "main": "dist/main.js",
   "scripts": {
-    "build": "node -e \"require('node:fs').rmSync('dist',{recursive:true,force:true})\" && esbuild src/main.ts src/preload.ts --bundle --platform=node --format=cjs --target=node22 --external:electron --outdir=dist",
+    "build": "node -e \"require('node:fs').rmSync('dist',{recursive:true,force:true})\" && esbuild src/main.ts --bundle --platform=node --format=esm --target=node22 --external:electron --outfile=dist/main.js && esbuild src/preload.ts --bundle --platform=node --format=cjs --target=node22 --external:electron --outfile=dist/preload.js",
     "dev": "electron .",
     "package": "pnpm build && electron-builder --win",
     "package:dir": "pnpm build && electron-builder --win --dir",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "build": {
     "appId": "com.snake.game",
@@ -30,8 +33,18 @@
     ],
     "win": {
       "target": [
-        { "target": "nsis", "arch": ["x64"] },
-        { "target": "portable", "arch": ["x64"] }
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
       ]
     },
     "nsis": {
@@ -40,10 +53,16 @@
     }
   },
   "devDependencies": {
+    "@snake/eslint-config": "workspace:*",
+    "@snake/prettier-config": "workspace:*",
+    "@snake/tsconfig": "workspace:*",
     "@types/node": "^24.13.3",
     "electron": "^43.4.1",
     "electron-builder": "^26.15.3",
     "esbuild": "^0.25.12",
+    "eslint": "^9.14.0",
+    "globals": "^15.0.0",
+    "prettier": "^3.3.0",
     "typescript": "^5.9.3"
   }
 }

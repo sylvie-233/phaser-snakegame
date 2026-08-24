@@ -1,0 +1,6 @@
+{
+  "name": "@snake/tsconfig",
+  "version": "0.1.0",
+  "description": "共享 TypeScript 编译配置(可拷贝到其它项目复用)",
+  "files": ["*.json"]
+}

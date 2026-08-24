@@ -1,0 +1,11 @@
+{
+  "name": "@snake/prettier-config",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "共享 Prettier 配置(可拷贝到其它项目复用)",
+  "main": "./index.mjs",
+  "exports": {
+    ".": "./index.mjs"
+  },
+  "files": ["index.mjs"]
+}

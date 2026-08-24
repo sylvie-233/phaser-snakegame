@@ -1,17 +1,17 @@
-import * as Phaser from 'phaser';
+import * as Phaser from 'phaser'
 
 export interface ButtonOptions {
-  text: string;
-  onClick: () => void;
+  text: string
+  onClick: () => void
   /** 按钮宽度,默认 220 */
-  width?: number;
+  width?: number
   /** 按钮高度,默认 56 */
-  height?: number;
-  radius?: number;
-  fontSize?: string;
-  textColor?: string;
-  backgroundColor?: number;
-  hoverColor?: number;
+  height?: number
+  radius?: number
+  fontSize?: string
+  textColor?: string
+  backgroundColor?: number
+  hoverColor?: number
 }
 
 /**
@@ -34,15 +34,15 @@ export function createButton(
     textColor = '#0f172a',
     backgroundColor = 0x22c55e,
     hoverColor = 0x4ade80,
-  } = options;
+  } = options
 
-  const g = scene.add.graphics();
+  const g = scene.add.graphics()
   const draw = (color: number): void => {
-    g.clear();
-    g.fillStyle(color, 1);
-    g.fillRoundedRect(-width / 2, -height / 2, width, height, radius);
-  };
-  draw(backgroundColor);
+    g.clear()
+    g.fillStyle(color, 1)
+    g.fillRoundedRect(-width / 2, -height / 2, width, height, radius)
+  }
+  draw(backgroundColor)
 
   const label = scene.add
     .text(0, 0, text, {
@@ -51,22 +51,22 @@ export function createButton(
       fontStyle: 'bold',
       color: textColor,
     })
-    .setOrigin(0.5);
+    .setOrigin(0.5)
 
-  const container = scene.add.container(x, y, [g, label]);
-  container.setSize(width, height);
-  container.setInteractive({ useHandCursor: true });
+  const container = scene.add.container(x, y, [g, label])
+  container.setSize(width, height)
+  container.setInteractive({ useHandCursor: true })
 
-  container.on('pointerover', () => draw(hoverColor));
+  container.on('pointerover', () => draw(hoverColor))
   container.on('pointerout', () => {
-    draw(backgroundColor);
-    container.setScale(1);
-  });
-  container.on('pointerdown', () => container.setScale(0.96));
+    draw(backgroundColor)
+    container.setScale(1)
+  })
+  container.on('pointerdown', () => container.setScale(0.96))
   container.on('pointerup', () => {
-    container.setScale(1);
-    onClick();
-  });
+    container.setScale(1)
+    onClick()
+  })
 
-  return container;
+  return container
 }
