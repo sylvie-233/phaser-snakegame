@@ -104,6 +104,9 @@ export class SnakeGame {
     }
   }
 
+  /**
+   * 移动身体
+   */
   private tick(): void {
     if (this.pendingDirection) {
       this.direction = this.pendingDirection
@@ -119,6 +122,7 @@ export class SnakeGame {
       return
     }
 
+    // 食物碰撞
     const willEat = this.food !== null && next.x === this.food.x && next.y === this.food.y
 
     // 自撞检测:未吃到食物时蛇尾会移开,允许蛇头进入尾巴当前所在格
@@ -137,6 +141,11 @@ export class SnakeGame {
     }
   }
 
+  /**
+   * 根据方向获取下一个头
+   * @param head 
+   * @returns 
+   */
   private nextHead(head: Point): Point {
     switch (this.direction) {
       case "up":

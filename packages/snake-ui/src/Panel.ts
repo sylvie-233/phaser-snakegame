@@ -1,6 +1,7 @@
 import * as Phaser from "phaser"
 import { uiColors, uiRadii } from "./theme"
 
+// 面板选项
 export interface PanelOptions {
   width: number
   height: number

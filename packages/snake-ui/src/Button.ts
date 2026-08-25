@@ -1,9 +1,13 @@
 import * as Phaser from "phaser"
 import { UI_FONT_FAMILY, uiColors, uiRadii } from "./theme"
 
+// 按钮变体
 export type ButtonVariant = "primary" | "secondary" | "danger"
+
+// 按钮大小
 export type ButtonSize = "sm" | "md" | "lg"
 
+// 按钮选项
 export interface ButtonOptions {
   text: string
   onClick: () => void
@@ -19,12 +23,14 @@ export interface ButtonOptions {
   disabled?: boolean
 }
 
+// 颜色预设
 const VARIANT_COLORS: Record<ButtonVariant, { bg: number; hover: number; text: string }> = {
   primary: { bg: uiColors.primary, hover: uiColors.primaryHover, text: uiColors.textOnColor },
   secondary: { bg: uiColors.secondary, hover: uiColors.secondaryHover, text: uiColors.textPrimary },
   danger: { bg: uiColors.danger, hover: uiColors.dangerHover, text: "#ffffff" },
 }
 
+// 大小预设
 const SIZE_DIMENSIONS: Record<ButtonSize, { width: number; height: number; fontSize: string }> = {
   sm: { width: 160, height: 44, fontSize: "16px" },
   md: { width: 220, height: 56, fontSize: "22px" },

@@ -12,6 +12,9 @@ const CONTROL_ROWS = [
   { key: "空格 / P", desc: "暂停 / 继续" },
 ]
 
+/**
+ * 开始界面场景
+ */
 export class StartScene extends Phaser.Scene {
   private started = false
   private modal: ModalHandle | null = null
@@ -21,6 +24,7 @@ export class StartScene extends Phaser.Scene {
   }
 
   create(): void {
+    // 设置场景背景
     this.cameras.main.setBackgroundColor(BG_COLOR)
 
     // 场景实例会被 Phaser 复用,复位防重入标志
@@ -33,6 +37,7 @@ export class StartScene extends Phaser.Scene {
     createLabel(this, GAME_WIDTH / 2, 150, "贪吃蛇", { variant: "heading" })
     createLabel(this, GAME_WIDTH / 2, 208, "Phaser 4 · TypeScript", { variant: "muted" })
 
+    // 绘制蛇
     this.drawDecorativeSnake()
 
     // 开始游戏按钮
@@ -50,11 +55,13 @@ export class StartScene extends Phaser.Scene {
     })
   }
 
+  // 开始游戏
   private startGame(): void {
     if (this.started || this.modal) {
       return
     }
     this.started = true
+    // 切换游戏场景
     this.scene.start("GameScene")
   }
 

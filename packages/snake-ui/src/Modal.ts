@@ -4,6 +4,7 @@ import { createLabel } from "./Label"
 import { createPanel } from "./Panel"
 import { uiColors } from "./theme"
 
+// 模态框选项
 export interface ModalOptions {
   title: string
   width?: number

@@ -27,7 +27,11 @@ const SNAKE_BODY_COLOR = 0x22c55e
 const FOOD_COLOR = 0xff6b6b
 const BG_COLOR = 0x0f172a
 
+/**
+ * 游戏场景
+ */
 export class GameScene extends Phaser.Scene {
+  // 核心游戏对象
   private snakeGame = new SnakeGame({ cols: GRID_COLS, rows: GRID_ROWS })
 
   private boardGraphics!: Phaser.GameObjects.Graphics
@@ -44,17 +48,22 @@ export class GameScene extends Phaser.Scene {
   }
 
   create(): void {
+    // 背景颜色
     this.cameras.main.setBackgroundColor(BG_COLOR)
 
+    // 游戏网格
     this.boardGraphics = this.add.graphics()
 
+    // 得分文字
     this.scoreText = this.add.text(12, 10, "", {
       fontFamily: 'system-ui, "Microsoft YaHei", sans-serif',
       fontSize: "18px",
       color: "#e2e8f0",
     })
 
+    // 初始化叠加层
     this.setupOverlay()
+    // 初始化按键监听
     this.setupKeyboard()
 
     // 场景实例会被 Phaser 复用(类字段不随 scene.start 重新初始化),这里重建并复位状态
@@ -65,6 +74,7 @@ export class GameScene extends Phaser.Scene {
     this.draw()
   }
 
+  // 初始化按键监听
   private setupKeyboard(): void {
     this.input.keyboard!.on("keydown", (event: KeyboardEvent) => {
       const dir = KEY_TO_DIRECTION[event.code]
@@ -82,6 +92,7 @@ export class GameScene extends Phaser.Scene {
     })
   }
 
+  // 切换游戏暂停状态
   private togglePause(): void {
     if (this.snakeGame.status === "running") {
       this.snakeGame.pause()
@@ -115,6 +126,7 @@ export class GameScene extends Phaser.Scene {
     })
   }
 
+  // 绘制
   private draw(): void {
     const g = this.boardGraphics
     g.clear()
@@ -162,10 +174,12 @@ export class GameScene extends Phaser.Scene {
     }
   }
 
+  // 绘制得分UI
   private refreshHud(): void {
     this.scoreText.setText(`得分: ${this.snakeGame.score}`)
   }
 
+  // 初始化叠加层
   private setupOverlay(): void {
     this.overlayGraphics = this.add.graphics()
     this.overlayGraphics.fillStyle(0x000000, 0.55)

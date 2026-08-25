@@ -1,6 +1,7 @@
 import * as Phaser from "phaser"
 import { UI_FONT_FAMILY, uiColors, uiRadii } from "./theme"
 
+// 弹出框选项
 export interface ToastOptions {
   message: string
   /** 停留时长(ms),默认 2000 */

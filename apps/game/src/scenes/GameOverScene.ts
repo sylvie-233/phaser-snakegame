@@ -11,6 +11,7 @@ interface GameOverData {
 const BEST_SCORE_KEY = "snake.bestScore"
 const BG_COLOR = 0x0f172a
 
+// 读取历史最佳得分
 function readBestScore(): number {
   try {
     return Number(localStorage.getItem(BEST_SCORE_KEY)) || 0
@@ -19,6 +20,7 @@ function readBestScore(): number {
   }
 }
 
+// 保存历史最佳得分
 function saveBestScore(score: number): void {
   try {
     localStorage.setItem(BEST_SCORE_KEY, String(score))
@@ -27,6 +29,9 @@ function saveBestScore(score: number): void {
   }
 }
 
+/**
+ * 游戏结束场景
+ */
 export class GameOverScene extends Phaser.Scene {
   private score = 0
   private won = false
@@ -81,6 +86,7 @@ export class GameOverScene extends Phaser.Scene {
   }
 
   private restart(): void {
+    // 点击事件防止二次触发
     if (this.navigated) {
       return
     }

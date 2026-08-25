@@ -1,8 +1,10 @@
 import * as Phaser from "phaser"
 import { UI_FONT_FAMILY, uiColors, uiFontSize } from "./theme"
 
+// 标签变体
 export type LabelVariant = "heading" | "title" | "subtitle" | "body" | "muted" | "accent"
 
+// 标签选项
 export interface LabelOptions {
   variant?: LabelVariant
   fontSize?: string

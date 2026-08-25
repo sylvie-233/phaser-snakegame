@@ -6,9 +6,13 @@ import { CELL_SIZE, GAME_HEIGHT, GAME_WIDTH } from "../layout"
 export function drawGridBackground(scene: Phaser.Scene): void {
   const grid = scene.add.graphics()
   grid.lineStyle(1, 0xffffff, 0.05)
+  
+  // 绘制竖线
   for (let x = 1; x < GRID_COLS; x++) {
     grid.lineBetween(x * CELL_SIZE, 0, x * CELL_SIZE, GAME_HEIGHT)
   }
+
+  // 绘制横线
   for (let y = 1; y < GRID_ROWS; y++) {
     grid.lineBetween(0, y * CELL_SIZE, GAME_WIDTH, y * CELL_SIZE)
   }
