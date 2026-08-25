@@ -1,5 +1,5 @@
-import * as Phaser from 'phaser'
-import { UI_FONT_FAMILY, uiColors, uiRadii } from './theme'
+import * as Phaser from "phaser"
+import { UI_FONT_FAMILY, uiColors, uiRadii } from "./theme"
 
 export interface ToastOptions {
   message: string
@@ -20,7 +20,7 @@ export function showToast(scene: Phaser.Scene, options: ToastOptions): void {
 
   const text = scene.add.text(0, 0, message, {
     fontFamily: UI_FONT_FAMILY,
-    fontSize: '18px',
+    fontSize: "18px",
     color: textColor,
   })
   text.setOrigin(0.5)
@@ -39,7 +39,7 @@ export function showToast(scene: Phaser.Scene, options: ToastOptions): void {
     targets: container,
     alpha: 1,
     duration: 150,
-    ease: 'Quad.easeOut',
+    ease: "Quad.easeOut",
   })
   scene.tweens.add({
     targets: container,

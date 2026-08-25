@@ -1,4 +1,4 @@
-import type { Direction, GameStatus, Point } from './types'
+import type { Direction, GameStatus, Point } from "./types"
 
 export interface SnakeGameOptions {
   cols: number
@@ -6,10 +6,10 @@ export interface SnakeGameOptions {
 }
 
 const OPPOSITE: Record<Direction, Direction> = {
-  up: 'down',
-  down: 'up',
-  left: 'right',
-  right: 'left',
+  up: "down",
+  down: "up",
+  left: "right",
+  right: "left",
 }
 
 /**
@@ -21,10 +21,10 @@ export class SnakeGame {
   readonly rows: number
 
   snake: Point[] = []
-  direction: Direction = 'right'
+  direction: Direction = "right"
   food: Point | null = null
   score = 0
-  status: GameStatus = 'idle'
+  status: GameStatus = "idle"
 
   private moveAccumulator = 0
   private pendingDirection: Direction | null = null
@@ -44,31 +44,31 @@ export class SnakeGame {
       { x: cx - 1, y: cy },
       { x: cx - 2, y: cy },
     ]
-    this.direction = 'right'
+    this.direction = "right"
     this.pendingDirection = null
     this.score = 0
     this.moveAccumulator = 0
-    this.status = 'idle'
+    this.status = "idle"
     this.food = this.spawnFood()
   }
 
   /** 开始游戏:若处于开局或结束状态,先重置。 */
   start(): void {
-    if (this.status === 'idle' || this.status === 'gameover' || this.status === 'win') {
+    if (this.status === "idle" || this.status === "gameover" || this.status === "win") {
       this.reset()
     }
-    this.status = 'running'
+    this.status = "running"
   }
 
   pause(): void {
-    if (this.status === 'running') {
-      this.status = 'paused'
+    if (this.status === "running") {
+      this.status = "paused"
     }
   }
 
   resume(): void {
-    if (this.status === 'paused') {
-      this.status = 'running'
+    if (this.status === "paused") {
+      this.status = "running"
     }
   }
 
@@ -88,7 +88,7 @@ export class SnakeGame {
    * @param stepMs  蛇每走一格所需时间(ms),可随分数变化
    */
   update(deltaMs: number, stepMs: number): void {
-    if (this.status !== 'running') {
+    if (this.status !== "running") {
       return
     }
     this.moveAccumulator += deltaMs
@@ -98,7 +98,7 @@ export class SnakeGame {
       this.moveAccumulator -= stepMs
       this.tick()
       guard++
-      if (this.status !== 'running') {
+      if (this.status !== "running") {
         break
       }
     }
@@ -115,7 +115,7 @@ export class SnakeGame {
 
     // 撞墙
     if (next.x < 0 || next.x >= this.cols || next.y < 0 || next.y >= this.rows) {
-      this.status = 'gameover'
+      this.status = "gameover"
       return
     }
 
@@ -124,7 +124,7 @@ export class SnakeGame {
     // 自撞检测:未吃到食物时蛇尾会移开,允许蛇头进入尾巴当前所在格
     const bodyToCheck = willEat ? this.snake : this.snake.slice(0, -1)
     if (bodyToCheck.some((s) => s.x === next.x && s.y === next.y)) {
-      this.status = 'gameover'
+      this.status = "gameover"
       return
     }
 
@@ -139,13 +139,13 @@ export class SnakeGame {
 
   private nextHead(head: Point): Point {
     switch (this.direction) {
-      case 'up':
+      case "up":
         return { x: head.x, y: head.y - 1 }
-      case 'down':
+      case "down":
         return { x: head.x, y: head.y + 1 }
-      case 'left':
+      case "left":
         return { x: head.x - 1, y: head.y }
-      case 'right':
+      case "right":
         return { x: head.x + 1, y: head.y }
     }
   }
@@ -161,7 +161,7 @@ export class SnakeGame {
       }
     }
     if (free.length === 0) {
-      this.status = 'win'
+      this.status = "win"
       return null
     }
     return free[Math.floor(Math.random() * free.length)]

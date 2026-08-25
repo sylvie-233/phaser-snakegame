@@ -1,5 +1,5 @@
-import * as Phaser from 'phaser'
-import { uiColors, uiRadii } from './theme'
+import * as Phaser from "phaser"
+import { uiColors, uiRadii } from "./theme"
 
 export interface PanelOptions {
   width: number

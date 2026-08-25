@@ -1,8 +1,8 @@
-import * as Phaser from 'phaser'
-import { UI_FONT_FAMILY, uiColors, uiRadii } from './theme'
+import * as Phaser from "phaser"
+import { UI_FONT_FAMILY, uiColors, uiRadii } from "./theme"
 
-export type ButtonVariant = 'primary' | 'secondary' | 'danger'
-export type ButtonSize = 'sm' | 'md' | 'lg'
+export type ButtonVariant = "primary" | "secondary" | "danger"
+export type ButtonSize = "sm" | "md" | "lg"
 
 export interface ButtonOptions {
   text: string
@@ -22,13 +22,13 @@ export interface ButtonOptions {
 const VARIANT_COLORS: Record<ButtonVariant, { bg: number; hover: number; text: string }> = {
   primary: { bg: uiColors.primary, hover: uiColors.primaryHover, text: uiColors.textOnColor },
   secondary: { bg: uiColors.secondary, hover: uiColors.secondaryHover, text: uiColors.textPrimary },
-  danger: { bg: uiColors.danger, hover: uiColors.dangerHover, text: '#ffffff' },
+  danger: { bg: uiColors.danger, hover: uiColors.dangerHover, text: "#ffffff" },
 }
 
 const SIZE_DIMENSIONS: Record<ButtonSize, { width: number; height: number; fontSize: string }> = {
-  sm: { width: 160, height: 44, fontSize: '16px' },
-  md: { width: 220, height: 56, fontSize: '22px' },
-  lg: { width: 280, height: 64, fontSize: '26px' },
+  sm: { width: 160, height: 44, fontSize: "16px" },
+  md: { width: 220, height: 56, fontSize: "22px" },
+  lg: { width: 280, height: 64, fontSize: "26px" },
 }
 
 /** 圆角矩形按钮(Container = Graphics + Text)。自带悬停高亮与按下缩放反馈。 */
@@ -38,7 +38,7 @@ export function createButton(
   y: number,
   options: ButtonOptions,
 ): Phaser.GameObjects.Container {
-  const { text, onClick, variant = 'primary', size = 'md', disabled = false } = options
+  const { text, onClick, variant = "primary", size = "md", disabled = false } = options
   const sizeSpec = SIZE_DIMENSIONS[size]
   const width = options.width ?? sizeSpec.width
   const height = options.height ?? sizeSpec.height
@@ -59,7 +59,7 @@ export function createButton(
     .text(0, 0, text, {
       fontFamily: UI_FONT_FAMILY,
       fontSize,
-      fontStyle: 'bold',
+      fontStyle: "bold",
       color: textColor,
     })
     .setOrigin(0.5)
@@ -69,13 +69,13 @@ export function createButton(
 
   if (!disabled) {
     container.setInteractive({ useHandCursor: true })
-    container.on('pointerover', () => draw(colors.hover))
-    container.on('pointerout', () => {
+    container.on("pointerover", () => draw(colors.hover))
+    container.on("pointerout", () => {
       draw(colors.bg)
       container.setScale(1)
     })
-    container.on('pointerdown', () => container.setScale(0.96))
-    container.on('pointerup', () => {
+    container.on("pointerdown", () => container.setScale(0.96))
+    container.on("pointerup", () => {
       container.setScale(1)
       onClick()
     })

@@ -1,15 +1,15 @@
-import * as Phaser from 'phaser'
-import { GAME_WIDTH } from '../layout'
-import { drawGridBackground } from './drawGrid'
-import { createButton, createLabel, openModal, type ModalHandle } from '@snake/ui'
+import * as Phaser from "phaser"
+import { GAME_WIDTH } from "../layout"
+import { drawGridBackground } from "./drawGrid"
+import { createButton, createLabel, openModal, type ModalHandle } from "@snake/ui"
 
 const BG_COLOR = 0x0f172a
 const SNAKE_HEAD_COLOR = 0x4ade80
 const SNAKE_BODY_COLOR = 0x22c55e
 
 const CONTROL_ROWS = [
-  { key: '方向键 / WASD', desc: '控制蛇移动' },
-  { key: '空格 / P', desc: '暂停 / 继续' },
+  { key: "方向键 / WASD", desc: "控制蛇移动" },
+  { key: "空格 / P", desc: "暂停 / 继续" },
 ]
 
 export class StartScene extends Phaser.Scene {
@@ -17,7 +17,7 @@ export class StartScene extends Phaser.Scene {
   private modal: ModalHandle | null = null
 
   constructor() {
-    super('StartScene')
+    super("StartScene")
   }
 
   create(): void {
@@ -30,22 +30,22 @@ export class StartScene extends Phaser.Scene {
     drawGridBackground(this)
 
     // 标题
-    createLabel(this, GAME_WIDTH / 2, 150, '贪吃蛇', { variant: 'heading' })
-    createLabel(this, GAME_WIDTH / 2, 208, 'Phaser 4 · TypeScript', { variant: 'muted' })
+    createLabel(this, GAME_WIDTH / 2, 150, "贪吃蛇", { variant: "heading" })
+    createLabel(this, GAME_WIDTH / 2, 208, "Phaser 4 · TypeScript", { variant: "muted" })
 
     this.drawDecorativeSnake()
 
     // 开始游戏按钮
     createButton(this, GAME_WIDTH / 2, 500, {
-      text: '开始游戏',
+      text: "开始游戏",
       onClick: () => this.startGame(),
     })
 
     // 按键说明按钮:弹出操作说明弹窗
     createButton(this, GAME_WIDTH / 2, 572, {
-      text: '按键说明',
-      variant: 'secondary',
-      size: 'sm',
+      text: "按键说明",
+      variant: "secondary",
+      size: "sm",
       onClick: () => this.showControls(),
     })
   }
@@ -55,7 +55,7 @@ export class StartScene extends Phaser.Scene {
       return
     }
     this.started = true
-    this.scene.start('GameScene')
+    this.scene.start("GameScene")
   }
 
   /** 弹出按键操作说明弹窗(点遮罩或「关闭」按钮关闭)。 */
@@ -64,15 +64,15 @@ export class StartScene extends Phaser.Scene {
       return
     }
     this.modal = openModal(this, {
-      title: '按键操作说明',
+      title: "按键操作说明",
       height: 300,
       // 背景是深色 + 浅网格,遮罩调淡让网格透出来
       overlayAlpha: 0.35,
       content: (panel) => {
         CONTROL_ROWS.forEach((row, i) => {
           const y = -45 + i * 60
-          panel.add(createLabel(this, -90, y, row.key, { variant: 'body', color: '#4ade80' }))
-          panel.add(createLabel(this, 40, y, row.desc, { variant: 'body' }))
+          panel.add(createLabel(this, -90, y, row.key, { variant: "body", color: "#4ade80" }))
+          panel.add(createLabel(this, 40, y, row.desc, { variant: "body" }))
         })
       },
       onClose: () => {

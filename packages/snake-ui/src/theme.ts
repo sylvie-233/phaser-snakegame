@@ -19,13 +19,13 @@ export const uiColors = {
   danger: 0xef4444,
   dangerHover: 0xf87171,
   /** 文字 */
-  textPrimary: '#f8fafc',
-  textSecondary: '#cbd5e1',
-  textMuted: '#94a3b8',
+  textPrimary: "#f8fafc",
+  textSecondary: "#cbd5e1",
+  textMuted: "#94a3b8",
   /** 彩色背景上的深色文字 */
-  textOnColor: '#0f172a',
+  textOnColor: "#0f172a",
   /** 强调色(胜利 / 新纪录) */
-  accent: '#fbbf24',
+  accent: "#fbbf24",
 } as const
 
 export const uiRadii = {
@@ -36,9 +36,9 @@ export const uiRadii = {
 
 /** 文本字阶(px) */
 export const uiFontSize = {
-  heading: '56px',
-  title: '40px',
-  subtitle: '26px',
-  body: '18px',
-  small: '16px',
+  heading: "56px",
+  title: "40px",
+  subtitle: "26px",
+  body: "18px",
+  small: "16px",
 } as const

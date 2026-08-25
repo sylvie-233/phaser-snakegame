@@ -1,8 +1,8 @@
-import * as Phaser from 'phaser'
-import { createButton } from './Button'
-import { createLabel } from './Label'
-import { createPanel } from './Panel'
-import { uiColors } from './theme'
+import * as Phaser from "phaser"
+import { createButton } from "./Button"
+import { createLabel } from "./Label"
+import { createPanel } from "./Panel"
+import { uiColors } from "./theme"
 
 export interface ModalOptions {
   title: string
@@ -31,7 +31,7 @@ export interface ModalHandle {
 export function openModal(scene: Phaser.Scene, options: ModalOptions): ModalHandle {
   const { title, onClose } = options
   const overlayAlpha = options.overlayAlpha ?? 0.65
-  const closeText = options.closeText === undefined ? '关闭' : options.closeText
+  const closeText = options.closeText === undefined ? "关闭" : options.closeText
   const width = options.width ?? 460
   const height = options.height ?? 300
   const cx = scene.scale.width / 2
@@ -54,7 +54,7 @@ export function openModal(scene: Phaser.Scene, options: ModalOptions): ModalHand
   const overlay = scene.add
     .rectangle(cx, cy, scene.scale.width, scene.scale.height, 0x000000, overlayAlpha)
     .setInteractive({ useHandCursor: true })
-  overlay.on('pointerdown', close)
+  overlay.on("pointerdown", close)
   created.push(overlay)
 
   const panel = createPanel(scene, cx, cy, {
@@ -66,15 +66,15 @@ export function openModal(scene: Phaser.Scene, options: ModalOptions): ModalHand
   created.push(panel)
 
   const titleLabel = createLabel(scene, cx, cy - height / 2 + 55, title, {
-    variant: 'subtitle',
+    variant: "subtitle",
   })
   created.push(titleLabel)
 
   if (closeText !== null) {
     const closeBtn = createButton(scene, cx, cy + height / 2 - 40, {
       text: closeText,
-      variant: 'secondary',
-      size: 'sm',
+      variant: "secondary",
+      size: "sm",
       onClick: close,
     })
     created.push(closeBtn)

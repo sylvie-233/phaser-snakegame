@@ -1,14 +1,14 @@
-import * as Phaser from 'phaser'
-import { GAME_WIDTH } from '../layout'
-import { drawGridBackground } from './drawGrid'
-import { createButton, createLabel, uiColors } from '@snake/ui'
+import * as Phaser from "phaser"
+import { GAME_WIDTH } from "../layout"
+import { drawGridBackground } from "./drawGrid"
+import { createButton, createLabel, uiColors } from "@snake/ui"
 
 interface GameOverData {
   score: number
   won: boolean
 }
 
-const BEST_SCORE_KEY = 'snake.bestScore'
+const BEST_SCORE_KEY = "snake.bestScore"
 const BG_COLOR = 0x0f172a
 
 function readBestScore(): number {
@@ -33,7 +33,7 @@ export class GameOverScene extends Phaser.Scene {
   private navigated = false
 
   constructor() {
-    super('GameOverScene')
+    super("GameOverScene")
   }
 
   init(data: GameOverData): void {
@@ -48,13 +48,13 @@ export class GameOverScene extends Phaser.Scene {
     drawGridBackground(this)
 
     // 标题
-    const title = this.won ? '你赢了!' : '游戏结束'
-    const titleColor = this.won ? uiColors.accent : '#f87171'
-    createLabel(this, GAME_WIDTH / 2, 160, title, { variant: 'title', color: titleColor })
+    const title = this.won ? "你赢了!" : "游戏结束"
+    const titleColor = this.won ? uiColors.accent : "#f87171"
+    createLabel(this, GAME_WIDTH / 2, 160, title, { variant: "title", color: titleColor })
 
     // 得分
     createLabel(this, GAME_WIDTH / 2, 300, `得分: ${this.score}`, {
-      fontSize: '34px',
+      fontSize: "34px",
       color: uiColors.textPrimary,
     })
 
@@ -63,19 +63,19 @@ export class GameOverScene extends Phaser.Scene {
     const best = Math.max(prevBest, this.score)
     saveBestScore(best)
     const isRecord = this.score > prevBest && this.score > 0
-    createLabel(this, GAME_WIDTH / 2, 365, isRecord ? '新纪录!' : `最佳: ${best}`, {
-      fontSize: '22px',
+    createLabel(this, GAME_WIDTH / 2, 365, isRecord ? "新纪录!" : `最佳: ${best}`, {
+      fontSize: "22px",
       color: isRecord ? uiColors.accent : uiColors.textMuted,
     })
 
     // 重新开始 / 返回主页 按钮
     createButton(this, GAME_WIDTH / 2 - 135, 500, {
-      text: '重新开始',
+      text: "重新开始",
       onClick: () => this.restart(),
     })
     createButton(this, GAME_WIDTH / 2 + 135, 500, {
-      text: '返回主页',
-      variant: 'secondary',
+      text: "返回主页",
+      variant: "secondary",
       onClick: () => this.backToStart(),
     })
   }
@@ -85,7 +85,7 @@ export class GameOverScene extends Phaser.Scene {
       return
     }
     this.navigated = true
-    this.scene.start('GameScene')
+    this.scene.start("GameScene")
   }
 
   private backToStart(): void {
@@ -93,6 +93,6 @@ export class GameOverScene extends Phaser.Scene {
       return
     }
     this.navigated = true
-    this.scene.start('StartScene')
+    this.scene.start("StartScene")
   }
 }

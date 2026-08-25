@@ -2,12 +2,14 @@
   "name": "@snake/eslint-config",
   "version": "0.1.0",
   "type": "module",
-  "description": "共享 ESLint flat config(可拷贝到其它项目复用)",
+  "description": "共享 ESLint flat config",
   "main": "./index.ts",
   "exports": {
     ".": "./index.ts"
   },
-  "files": ["index.ts"],
+  "files": [
+    "index.ts"
+  ],
   "dependencies": {
     "@eslint/js": "^9.0.0",
     "eslint-config-prettier": "^9.1.0",
@@ -15,5 +17,8 @@
   },
   "peerDependencies": {
     "eslint": "^9.14.0"
+  },
+  "devDependencies": {
+    "@types/eslint-config-prettier": "^6.11.3"
   }
 }

@@ -1,6 +1,6 @@
-import * as Phaser from 'phaser'
-import { GRID_COLS, GRID_ROWS } from '@snake/core'
-import { CELL_SIZE, GAME_HEIGHT, GAME_WIDTH } from '../layout'
+import * as Phaser from "phaser"
+import { GRID_COLS, GRID_ROWS } from "@snake/core"
+import { CELL_SIZE, GAME_HEIGHT, GAME_WIDTH } from "../layout"
 
 /** 在整个画布上绘制浅色网格(用于开始页 / 结束页背景)。 */
 export function drawGridBackground(scene: Phaser.Scene): void {

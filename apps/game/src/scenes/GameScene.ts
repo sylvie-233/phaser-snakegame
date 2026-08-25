@@ -1,6 +1,6 @@
-import * as Phaser from 'phaser'
-import { GRID_COLS, GRID_ROWS, SnakeGame, stepDuration } from '@snake/core'
-import type { Direction } from '@snake/core'
+import * as Phaser from "phaser"
+import { GRID_COLS, GRID_ROWS, SnakeGame, stepDuration } from "@snake/core"
+import type { Direction } from "@snake/core"
 import {
   BOARD_HEIGHT,
   BOARD_OFFSET_X,
@@ -9,17 +9,17 @@ import {
   CELL_SIZE,
   GAME_HEIGHT,
   GAME_WIDTH,
-} from '../layout'
+} from "../layout"
 
 const KEY_TO_DIRECTION: Record<string, Direction> = {
-  ArrowUp: 'up',
-  ArrowDown: 'down',
-  ArrowLeft: 'left',
-  ArrowRight: 'right',
-  KeyW: 'up',
-  KeyS: 'down',
-  KeyA: 'left',
-  KeyD: 'right',
+  ArrowUp: "up",
+  ArrowDown: "down",
+  ArrowLeft: "left",
+  ArrowRight: "right",
+  KeyW: "up",
+  KeyS: "down",
+  KeyA: "left",
+  KeyD: "right",
 }
 
 const SNAKE_HEAD_COLOR = 0x4ade80
@@ -36,11 +36,11 @@ export class GameScene extends Phaser.Scene {
   private overlayGraphics!: Phaser.GameObjects.Graphics
   private overlayTitle!: Phaser.GameObjects.Text
   private overlayHint!: Phaser.GameObjects.Text
-  private overlayKey = ''
+  private overlayKey = ""
   private sceneEnded = false
 
   constructor() {
-    super('GameScene')
+    super("GameScene")
   }
 
   create(): void {
@@ -48,10 +48,10 @@ export class GameScene extends Phaser.Scene {
 
     this.boardGraphics = this.add.graphics()
 
-    this.scoreText = this.add.text(12, 10, '', {
+    this.scoreText = this.add.text(12, 10, "", {
       fontFamily: 'system-ui, "Microsoft YaHei", sans-serif',
-      fontSize: '18px',
-      color: '#e2e8f0',
+      fontSize: "18px",
+      color: "#e2e8f0",
     })
 
     this.setupOverlay()
@@ -66,27 +66,27 @@ export class GameScene extends Phaser.Scene {
   }
 
   private setupKeyboard(): void {
-    this.input.keyboard!.on('keydown', (event: KeyboardEvent) => {
+    this.input.keyboard!.on("keydown", (event: KeyboardEvent) => {
       const dir = KEY_TO_DIRECTION[event.code]
 
       if (dir) {
-        if (this.snakeGame.status === 'running' || this.snakeGame.status === 'paused') {
+        if (this.snakeGame.status === "running" || this.snakeGame.status === "paused") {
           this.snakeGame.setDirection(dir)
         }
         return
       }
 
-      if (event.code === 'Space' || event.code === 'KeyP') {
+      if (event.code === "Space" || event.code === "KeyP") {
         this.togglePause()
       }
     })
   }
 
   private togglePause(): void {
-    if (this.snakeGame.status === 'running') {
+    if (this.snakeGame.status === "running") {
       this.snakeGame.pause()
-      this.showOverlay('已暂停', '按 空格 / P 继续')
-    } else if (this.snakeGame.status === 'paused') {
+      this.showOverlay("已暂停", "按 空格 / P 继续")
+    } else if (this.snakeGame.status === "paused") {
       this.snakeGame.resume()
       this.hideOverlay()
     }
@@ -104,14 +104,14 @@ export class GameScene extends Phaser.Scene {
   private checkGameOver(): void {
     if (
       this.sceneEnded ||
-      (this.snakeGame.status !== 'gameover' && this.snakeGame.status !== 'win')
+      (this.snakeGame.status !== "gameover" && this.snakeGame.status !== "win")
     ) {
       return
     }
     this.sceneEnded = true
-    this.scene.start('GameOverScene', {
+    this.scene.start("GameOverScene", {
       score: this.snakeGame.score,
-      won: this.snakeGame.status === 'win',
+      won: this.snakeGame.status === "win",
     })
   }
 
@@ -172,18 +172,18 @@ export class GameScene extends Phaser.Scene {
     this.overlayGraphics.fillRect(BOARD_OFFSET_X, BOARD_OFFSET_Y, BOARD_WIDTH, BOARD_HEIGHT)
 
     this.overlayTitle = this.add
-      .text(GAME_WIDTH / 2, GAME_HEIGHT / 2 - 30, '', {
+      .text(GAME_WIDTH / 2, GAME_HEIGHT / 2 - 30, "", {
         fontFamily: 'system-ui, "Microsoft YaHei", sans-serif',
-        fontSize: '40px',
-        color: '#f8fafc',
+        fontSize: "40px",
+        color: "#f8fafc",
       })
       .setOrigin(0.5)
 
     this.overlayHint = this.add
-      .text(GAME_WIDTH / 2, GAME_HEIGHT / 2 + 20, '', {
+      .text(GAME_WIDTH / 2, GAME_HEIGHT / 2 + 20, "", {
         fontFamily: 'system-ui, "Microsoft YaHei", sans-serif',
-        fontSize: '18px',
-        color: '#cbd5e1',
+        fontSize: "18px",
+        color: "#cbd5e1",
       })
       .setOrigin(0.5)
 
@@ -204,7 +204,7 @@ export class GameScene extends Phaser.Scene {
   }
 
   private hideOverlay(): void {
-    this.overlayKey = ''
+    this.overlayKey = ""
     this.overlayTitle.setVisible(false)
     this.overlayHint.setVisible(false)
     this.overlayGraphics.setVisible(false)

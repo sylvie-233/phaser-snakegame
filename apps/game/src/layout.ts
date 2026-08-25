@@ -1,4 +1,4 @@
-import { GRID_COLS, GRID_ROWS } from '@snake/core'
+import { GRID_COLS, GRID_ROWS } from "@snake/core"
 
 export const CELL_SIZE = 30 // 每格像素
 
